@@ -4,9 +4,13 @@ import styles from "./Home.styled"
 import BMW from "../../Icons/bmw.jpg"
 import Mercedes from "../../Icons/mercedes.webp"
 import Lamborgini from "../../Icons/lamborgini.jpg"
+import Ferrari from "../../Icons/Ferrari.webp"
+import Buggati from "../../Icons/Buggati.webp"
+import RolseRoys from "../../Icons/RolseRoys.webp"
 import CardItem from "../../components/CardItem/CardItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { useState } from "react";
 
 const data = [
     {
@@ -29,7 +33,35 @@ const data = [
     },
 ];
 
+const bonusData = [
+    {
+        mark: "Ferrari",
+        power: "700",
+        image: Ferrari,
+        speed: 370,
+    },
+    {
+        mark: "Buggati",
+        power: "1500",
+        image: Buggati,
+        speed: 400,
+    },
+    {
+        mark: "RolseRoys",
+        power: "400",
+        image: RolseRoys,
+        speed: 290,
+    },
+]
+
 const Home = () => {
+
+    const [isViewMoreOpened, setIsViewMoreOpened] = useState(false);
+
+    const viewMore = () => {
+        setIsViewMoreOpened((prevIsViewMoreOpened) => !prevIsViewMoreOpened);
+    }
+
     return (
         <div className="container">
             <div style={styles.container} className="row">
@@ -59,9 +91,22 @@ const Home = () => {
                     />
                 ))}
             </div>
+            {isViewMoreOpened && (
+                <div style={styles.cardWrapper}>
+                    {bonusData.map(({ mark, power, image, speed }, idx) => (
+                        <CardItem
+                            mark={mark}
+                            power={power}
+                            imageSrc={image}
+                            speed={speed}
+                            id={idx}
+                        />
+                    ))}
+                </div>
+            )}
             <div style={styles.button_container}>
-                <button style={styles.button} className="btn btn-primary">
-                    <a className="nav-link" href="#">View more</a>
+                <button style={styles.button} className="btn btn-primary" onClick={viewMore}>
+                    View more
                 </button>
             </div>
         </div>

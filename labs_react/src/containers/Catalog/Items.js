@@ -1,50 +1,50 @@
-import React from "react";
-import BMW from "../../Icons/bmw.jpg"
-import Mercedes from "../../Icons/mercedes.webp"
-import Lamborgini from "../../Icons/lamborgini.jpg"
-import Porshe from "../../Icons/Porshe.webp"
-import CardItem from "../../components/CardItem/CardItem";
+import React, { useEffect, useState } from "react";
 import styles from "./Items.styled";
+import { getAllCars } from "../../API/api";
+import CardItem from "../../components/CardItem/CardItem";
 
-const data = [
-    {
-        mark: "BMW",
-        power: "400",
-        image: BMW,
-        speed: 320,
-    },
-    {
-        mark: "Mercedes",
-        power: "300",
-        image: Mercedes,
-        speed: 290,
-    },
-    {
-        mark: "Lamborgini",
-        power: "600",
-        image: Lamborgini,
-        speed: 350,
-    },
-    {
-        mark: "Porshe",
-        power: "600",
-        image: Porshe,
-        speed: 300,
-    },
-];
+export default function Items(props) {
+    const [filteredCars, setFilteredCars] = useState([]);
 
-export default function Items() {
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const response = await getAllCars();
+                let sortedCars = [...response.data];
+
+                if (props.filteredBy === "power") {
+                    sortedCars.sort((a, b) => a.power - b.power);
+                }
+                else if (props.filteredBy === "speed") {
+                    sortedCars.sort((a, b) => a.speed - b.speed);
+                }
+
+                if (props.inputValue) {
+                    const filtered = response.data.filter(car => car.mark.toLowerCase().includes(props.inputValue.toLowerCase()));
+                    setFilteredCars(filtered);
+                } else {
+                    setFilteredCars(sortedCars);
+                }
+            } catch (error) {
+                console.error("Помилка завантаження даних про авто:", error);
+            }
+        };
+
+        fetchCars();
+    }, [props.inputValue, props.filteredBy]);
+
     return (
         <div className="container">
             <div style={styles.cardWrapper}>
-                {data.map(({ mark, power, image, speed }, idx) => (
+                {filteredCars.map(car => (
                     <CardItem
-                        mark={mark}
-                        power={power}
-                        imageSrc={image}
-                        speed={speed}
-                        viewButton = {true}
-                        id={idx}
+                        id={car.id}
+                        mark={car.mark}
+                        power={car.power}
+                        speed={car.speed}
+                        photo={car.urlPhoto}
+                        viewButton={true}
+                        key={car.id}
                     />
                 ))}
             </div>

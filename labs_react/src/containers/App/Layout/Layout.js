@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import CarsLogo from "../../../Icons/disney_logo.webp";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -9,14 +9,36 @@ import {
 
 const Layout = (props) => {
 
+    const [inputValue, setInputValue] = useState('');
+
     const navigate = useNavigate();
 
     const catalogPage = () => {
-        navigate('catalog');
+        navigate('/catalog');
     }
 
     const homePage = () => {
         navigate('/')
+    }
+
+    useEffect(() => {
+        function handleEnterPress(event) {
+            if (event.key === 'Enter') {
+                setInputValue(event.target.value);
+                props.onInputValueChange(event.target.value);
+                setInputValue("");
+            }
+        }
+
+        window.addEventListener('keydown', handleEnterPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleEnterPress);
+        };
+    }, [inputValue]);
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
     }
 
     return (
@@ -38,7 +60,14 @@ const Layout = (props) => {
                 </ul>
                 {props.searchLine && (
                     <div className="search-box">
-                        <input type="text" placeholder="Пошук..." style={{borderRadius: '10px'}}/>
+                        <input 
+                            id="search" 
+                            type="text" 
+                            placeholder="Пошук..." 
+                            style={{borderRadius: '10px'}}
+                            value={inputValue}
+                            onChange={handleInputChange}
+                        />
                     </div>
                 )}
             </div>

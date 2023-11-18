@@ -5,6 +5,7 @@ import App from './containers/App/App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 import Catalog from './containers/Catalog/Catalog';
+import ItemPage from './containers/ItemPage/ItemPage'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     path: '/catalog',
     element: <Catalog />, 
   },
+  {
+    path: '/catalog/:id',
+    element: <ItemPage />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

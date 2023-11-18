@@ -1,43 +1,41 @@
-import React from "react";
-import { useState } from "react";
-import { Button, Collapse } from "react-bootstrap";
-import styles from "./Filter.styled";
+import React, { useState } from "react";
+import { Button, DropdownButton, Dropdown } from "react-bootstrap";
 
+export default function Filters({ onFilterChange }) {
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
-export default function Filters() {
-
-    const [open, setOpen] = useState(false);
-
-    const toggleFilters = () => {
-        setOpen(!open);
+    const handleFilterChange = (filter) => {
+        setSelectedFilter(filter);
     };
 
-    return(
-        <div className="container" style={{marginTop: '50px'}}>
+    const handleApplyFilter = () => {
+        if (selectedFilter) {
+            onFilterChange(selectedFilter);
+        }
+    };
+
+    return (
+        <div className="container" style={{ marginTop: '50px' }}>
             <div className="row">
-                <div className="col" onClick={toggleFilters}>
-                    <div className="container-filter">
-                        <button className="btn btn-primary">Фільтр 1</button>
-                        <button className="btn btn-primary" style={{marginLeft: '45px'}}>Фільтр 2</button>
-                        <button className="btn btn-primary" style={{marginLeft: '45px'}}>Фільтр 3</button>
-                    </div>
+                <div className="col">
+                    <DropdownButton id="dropdown-basic-button" title={selectedFilter ? `Обраний фільтр: ${selectedFilter}` : 'Вибрати фільтр'}>
+                        <Dropdown.Item onClick={() => handleFilterChange("hp")}>
+                            Фільтр по потужності
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleFilterChange("speed")}>
+                            Фільтр по швидкості
+                        </Dropdown.Item>
+                    </DropdownButton>
                 </div>
-                <div className="col d-flex align-items-center"> 
+                <div className="col d-flex justify-content-end align-items-center">
                     <Button
                         className="btn btn-primary"
-                        onClick={toggleFilters}
-                        style={styles.button}>
+                        onClick={handleApplyFilter}
+                    >
                         Apply
                     </Button>
                 </div>
             </div>
-            <Collapse in={open}>
-                <div className="container-filter">
-                <div>Пункт 1</div>
-                <div>Пункт 2</div>
-                <div>Пункт 3</div>
-                </div>
-            </Collapse>
-    </div>
+        </div>
     );
 }

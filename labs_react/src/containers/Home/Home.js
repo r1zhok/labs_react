@@ -1,54 +1,31 @@
 import React from "react";
 import BlueCar from "../../Icons/blue_car.jpg"
 import styles from "./Home.styled"
-import BMW from "../../Icons/bmw.jpg"
-import Mercedes from "../../Icons/mercedes.webp"
-import Lamborgini from "../../Icons/lamborgini.jpg"
 import Ferrari from "../../Icons/Ferrari.webp"
 import Buggati from "../../Icons/Buggati.webp"
 import RolseRoys from "../../Icons/RolseRoys.webp"
 import CardItem from "../../components/CardItem/CardItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { useState } from "react";
-
-const data = [
-    {
-        mark: "BMW",
-        power: "400",
-        image: BMW,
-        speed: 320,
-    },
-    {
-        mark: "Mercedes",
-        power: "300",
-        image: Mercedes,
-        speed: 290,
-    },
-    {
-        mark: "Lamborgini",
-        power: "600",
-        image: Lamborgini,
-        speed: 350,
-    },
-];
+import { useState, useEffect } from "react";
+import { getAllCars } from "../../API/api";
 
 const bonusData = [
     {
         mark: "Ferrari",
-        power: "700",
+        power: 700,
         image: Ferrari,
         speed: 370,
     },
     {
         mark: "Buggati",
-        power: "1500",
+        power: 1500,
         image: Buggati,
         speed: 400,
     },
     {
         mark: "RolseRoys",
-        power: "400",
+        power: 400,
         image: RolseRoys,
         speed: 290,
     },
@@ -57,9 +34,25 @@ const bonusData = [
 const Home = () => {
 
     const [isViewMoreOpened, setIsViewMoreOpened] = useState(false);
+    const [isShowed, setIsShowed] = useState(false);
+    const [cars, setCars] = useState([]);
+
+    useEffect(() => {
+        const fetchCars = async () => {
+            try {
+                const response = await getAllCars();
+                setCars(response.data);
+            } catch (error) {
+                console.error("Помилка завантаження даних про авто:", error);
+            }
+        };
+
+        fetchCars();
+    }, []);
 
     const viewMore = () => {
         setIsViewMoreOpened((prevIsViewMoreOpened) => !prevIsViewMoreOpened);
+        setIsShowed(!isShowed);
     }
 
     return (
@@ -81,13 +74,14 @@ const Home = () => {
                 </div>
             </div>
             <div style={styles.cardWrapper}>
-                {data.map(({ mark, power, image, speed }, idx) => (
+                {cars.map(car => (
                     <CardItem
-                        mark={mark}
-                        power={power}
-                        imageSrc={image}
-                        speed={speed}
-                        id={idx}
+                        key={car.id}
+                        mark={car.mark}
+                        power={car.power}
+                        photo={car.urlPhoto}
+                        speed={car.speed}
+                        id={car.id}
                     />
                 ))}
             </div>
@@ -95,9 +89,10 @@ const Home = () => {
                 <div style={styles.cardWrapper}>
                     {bonusData.map(({ mark, power, image, speed }, idx) => (
                         <CardItem
+                            key={idx}
                             mark={mark}
                             power={power}
-                            imageSrc={image}
+                            photo={image}
                             speed={speed}
                             id={idx}
                         />
@@ -105,9 +100,17 @@ const Home = () => {
                 </div>
             )}
             <div style={styles.button_container}>
-                <button style={styles.button} className="btn btn-primary" onClick={viewMore}>
-                    View more
-                </button>
+                {isShowed && (
+                    <button style={styles.button} className="btn btn-primary" onClick={viewMore}>
+                        Dismiss
+                    </button>
+                )}
+                {isShowed===false && (
+                    <button style={styles.button} className="btn btn-primary" onClick={viewMore}>
+                        View more
+                    </button>
+                )
+                }
             </div>
         </div>
     );

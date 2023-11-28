@@ -1,14 +1,14 @@
 import React from "react";
-import BlueCar from "../../Icons/blue_car.jpg"
+import BlueCar from "../../../Icons/blue_car.jpg"
 import styles from "./Home.styled"
-import Ferrari from "../../Icons/Ferrari.webp"
-import Buggati from "../../Icons/Buggati.webp"
-import RolseRoys from "../../Icons/RolseRoys.webp"
-import CardItem from "../../components/CardItem/CardItem";
+import Ferrari from "../../../Icons/Ferrari.webp"
+import Buggati from "../../../Icons/Buggati.webp"
+import RolseRoys from "../../../Icons/RolseRoys.webp"
+import CardItem from "../../../components/CardItem/CardItem";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useState, useEffect } from "react";
-import { getAllCars } from "../../API/api";
+import { getAllCars } from "../../../API/api";
 
 const bonusData = [
     {

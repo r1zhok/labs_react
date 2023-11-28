@@ -23,7 +23,6 @@ const CardItem = ({ id, mark = 'No title.', power, speed,photo, viewButton, }) =
             width: "300px",
             height: "175px",
         };
-        console.log(photo);
     }
 
     const goToItemPage = () => {
@@ -32,9 +31,9 @@ const CardItem = ({ id, mark = 'No title.', power, speed,photo, viewButton, }) =
 
     return (
         <Card
-        hoverable
-        style={card}
-        cover={<img style={image} alt="example" src={photo} />}
+            hoverable
+            style={card}
+            cover={<img style={image} alt="example" src={photo} />}
         >
             <div>
                 <h2>{mark}</h2>

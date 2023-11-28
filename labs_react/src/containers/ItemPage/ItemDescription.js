@@ -7,6 +7,8 @@ import {
     useNavigate, useParams,
 } from "react-router-dom";
 import { getCar } from "../../API/api";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/reduces/carSlice"; 
 
 
 export default function ItemDescription() {
@@ -14,6 +16,7 @@ export default function ItemDescription() {
     const { id } = useParams();
     const [open, setOpen] = useState(false);
     const [car, setCar] = useState(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchCar = async () => {
@@ -35,6 +38,10 @@ export default function ItemDescription() {
     const goBack = () => {
         navigate("/catalog");
     }
+
+    const handleAddToCart = (car) => {
+        dispatch(addToCart(car));
+    } 
 
     if (!car) {
         return <div className="loader">loading...</div>;
@@ -78,7 +85,7 @@ export default function ItemDescription() {
                 <div style={styles.priceAndButtons}>
                     <h2>Price: $120000.00</h2>
                     <button style={styles.button1} className="btn btn-primary" onClick={goBack}>Go back</button>
-                    <button style={styles.button2} className="btn btn-success">Add to Card</button>
+                    <button style={styles.button2} className="btn btn-success" onClick={() => handleAddToCart(car)}>Add to Cart</button>
                 </div>
             </div>
         </div>

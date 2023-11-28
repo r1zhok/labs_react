@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import CarsLogo from "../../../Icons/disney_logo.webp";
+import CarsLogo from "../../Icons/disney_logo.webp";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import styles from './Layout.styled';
@@ -19,6 +19,10 @@ const Layout = (props) => {
 
     const homePage = () => {
         navigate('/')
+    }
+
+    const cartPage = () => {
+        navigate('/cart');
     }
 
     useEffect(() => {
@@ -55,7 +59,7 @@ const Layout = (props) => {
                         <button className="nav-link" onClick={catalogPage}>Catalog</button>
                     </li>
                     <li style={styles.navLink}  className="nav-item">
-                        <button className="nav-link">Cart</button>
+                        <button className="nav-link" onClick={cartPage}>Cart</button>
                     </li>
                 </ul>
                 {props.searchLine && (

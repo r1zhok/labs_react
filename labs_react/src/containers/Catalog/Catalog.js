@@ -1,5 +1,5 @@
-import Footer from "../App/Footer/Footer";
-import Layout from "../App/Layout/Layout";
+import Footer from "../../components/Footer/Footer";
+import Layout from "../../components/Layout/Layout";
 import Filters from "./Filter";
 import Items from "./Items";
 import React, {useState, useEffect } from "react";

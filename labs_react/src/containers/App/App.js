@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
-import Layout from './Layout/Layout'
-import Home from '../Home/Home';
-import Footer from './Footer/Footer'
+import Layout from '../../components/Layout/Layout';
+import Home from '../App/Home/Home';
+import Footer from '../../components/Footer/Footer';
 import { useEffect, useState } from 'react';
 import { RingLoader } from 'react-spinners';
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Footer.styled"
-import CarsLogo from "../../../Icons/disney_logo.webp"
+import CarsLogo from "../../Icons/disney_logo.webp"
 import { FacebookOutlined,TwitterOutlined,LinkedinOutlined } from "@ant-design/icons";
 
 const Footer = () => {

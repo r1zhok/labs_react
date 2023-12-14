@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useState, useEffect } from "react";
 import { getAllCars } from "../../../API/api";
+import { useNavigate } from "react-router-dom";
 
 const bonusData = [
     {
@@ -36,6 +37,8 @@ const Home = () => {
     const [isViewMoreOpened, setIsViewMoreOpened] = useState(false);
     const [isShowed, setIsShowed] = useState(false);
     const [cars, setCars] = useState([]);
+    const [updateFlag, setUpdateFlag] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCars = async () => {
@@ -53,6 +56,12 @@ const Home = () => {
     const viewMore = () => {
         setIsViewMoreOpened((prevIsViewMoreOpened) => !prevIsViewMoreOpened);
         setIsShowed(!isShowed);
+    }
+
+    const signOut = () => {
+        localStorage.clear();
+        setUpdateFlag(!updateFlag);
+        navigate('/login');
     }
 
     return (
@@ -111,6 +120,7 @@ const Home = () => {
                     </button>
                 )
                 }
+                <button onClick={signOut}>Sign me out</button>
             </div>
         </div>
     );

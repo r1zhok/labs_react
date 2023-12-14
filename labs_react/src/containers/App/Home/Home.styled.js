@@ -30,6 +30,7 @@ const styles = {
     },
     img: {
         borderRadius: '15px',
+        
     },
 }
 

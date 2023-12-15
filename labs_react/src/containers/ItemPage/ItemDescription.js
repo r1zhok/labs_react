@@ -14,26 +14,7 @@ import { addToCart } from "../../Redux/reduces/carSlice";
 export default function ItemDescription() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [open, setOpen] = useState(false);
-    const [car, setCar] = useState(null);
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchCar = async () => {
-            try {
-                const response = await getCar(id);
-                setCar(response.data);
-            } catch (error) {
-                console.error("Помилка завантаження даних про авто:", error);
-            }
-        };
-
-        fetchCar();
-    }, [id]);
-
-    const select = () => {
-        setOpen(!open);
-    }
 
     const goBack = () => {
         navigate("/catalog");
